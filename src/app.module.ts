@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { ServerModule } from './modules/server/server.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { AuthModule } from './modules/auth/auth.module';
     MongooseModule.forRoot(process.env.DATABASE_CONNECTION_URL),
     UsersModule,
     AuthModule,
+    ServerModule,
   ],
   controllers: [],
   providers: [],
