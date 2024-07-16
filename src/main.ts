@@ -1,6 +1,9 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import * as session from 'express-session';
+
+import { AppModule } from './app.module';
+
+const MongoStore = require('connect-mongo');
 
 async function bootstrap() {
   // Nest Create new Server
@@ -14,6 +17,12 @@ async function bootstrap() {
   const sessionCookieMaxAge = +process.env.SESSION_COOKIE_MAX_AGE;
   const sessionCookieName = process.env.SESSION_COOKIE_NAME;
 
+  const sessionsDatabaseURL = process.env.SESSION_STORE_DATABASE_URL;
+
+  const sessionsDatabase = MongoStore.create({
+    mongoUrl: sessionsDatabaseURL,
+  });
+
   // Initialize the Cookie Session
   app.use(
     session({
@@ -21,6 +30,7 @@ async function bootstrap() {
       secret: sessionSecret,
       resave: false,
       saveUninitialized: false,
+      store: sessionsDatabase,
       cookie: {
         secure: sessionCookieSecure,
         maxAge: sessionCookieMaxAge,
