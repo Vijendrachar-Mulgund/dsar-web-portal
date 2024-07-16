@@ -6,7 +6,7 @@ import {
   ServiceUnavailableException,
 } from '@nestjs/common';
 
-import { Request, Response } from 'express';
+import { Response } from 'express';
 
 import { HealthCheckResponseDto } from './dto/HealthCheckResponse.dto';
 
