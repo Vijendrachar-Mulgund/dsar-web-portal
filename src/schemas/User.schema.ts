@@ -9,6 +9,9 @@ export class User {
   @Prop({ required: true, minlength: 10 })
   password: string;
 
+  @Prop({ required: true, default: true })
+  isDefaultPassword: boolean;
+
   @Prop({ required: true })
   firstname: string;
 

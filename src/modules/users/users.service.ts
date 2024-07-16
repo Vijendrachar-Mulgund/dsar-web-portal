@@ -31,4 +31,8 @@ export class UsersService {
 
     return await newUserModel.save();
   }
+
+  async findUserByEmail(email: string): Promise<User> {
+    return this.userModel.findOne({ email: email });
+  }
 }

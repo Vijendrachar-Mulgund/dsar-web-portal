@@ -8,7 +8,7 @@ import {
 
 import { User } from 'src/schemas/User.schema';
 
-export class CreateNewUserResponseDto {
+export class UserResponseDto {
   @IsNumber()
   @IsNotEmpty()
   statusCode: number;
