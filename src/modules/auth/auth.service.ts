@@ -3,13 +3,15 @@ import * as bcrypt from 'bcrypt';
 
 import { AuthSignInRequestDto } from './dto/AuthSignInRequest.dto';
 import { UsersService } from '../users/users.service';
-import { User } from '../../schemas/User.schema';
+import { User, UserDocument } from '../../schemas/User.schema';
 
 @Injectable()
 export class AuthService {
   constructor(private usersService: UsersService) {}
 
-  async validateUser(requestBody: AuthSignInRequestDto): Promise<User | null> {
+  async validateUser(
+    requestBody: AuthSignInRequestDto,
+  ): Promise<UserDocument | null> {
     const user = await this.usersService.findUserByEmail(requestBody.email);
 
     if (!user) return null;
@@ -20,6 +22,8 @@ export class AuthService {
     );
 
     if (!isPasswordValid) return null;
+
+    console.log(`User: ${user._id} !!!`);
 
     return user;
   }

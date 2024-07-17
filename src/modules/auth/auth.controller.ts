@@ -28,15 +28,13 @@ export class AuthController {
   ): Promise<Response<AuthResponse, Record<string, any>>> {
     try {
       if (!request.body.email || !request.body.password) {
-        throw new NotAcceptableException(
-          'Please enter a valid Email and Password!',
-        );
+        throw new Error('Please enter a valid Email and Password!');
       }
 
       const user = await this.authService.validateUser(request.body);
 
       if (!user) {
-        throw new NotFoundException(`The Email or Password is incorrect!`);
+        throw new Error(`The Email or Password is incorrect!`);
       }
 
       const { password, ...result } = user;
@@ -55,14 +53,14 @@ export class AuthController {
     }
   }
 
-  @Post('validate')
-  async validate(
+  @Post('authenticate')
+  async authenticate(
     @Session() session: Record<string, any>,
     @Res() response: Response,
   ): Promise<Response<AuthResponse, Record<string, any>>> {
     try {
       if (!session.user) {
-        throw new BadRequestException('You are not logged in!');
+        throw new Error('You are not logged in!');
       }
 
       return response.json({
@@ -84,12 +82,12 @@ export class AuthController {
   ): Promise<Response<AuthResponse, Record<string, any>>> {
     try {
       if (!session.user) {
-        throw new BadRequestException('You are not logged in!');
+        throw new Error('You are not logged in!');
       }
 
       session.destroy((error) => {
         if (error) {
-          throw new BadRequestException('Something went wrong!');
+          throw new Error('Something went wrong!');
         }
       });
 
