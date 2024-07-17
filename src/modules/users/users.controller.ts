@@ -18,13 +18,10 @@ export class UsersController {
 
   @Post('register')
   async registerNewUser(
-    @Session() session: Record<string, any>,
     @Req() request: Request,
     @Res() response: Response,
   ): Promise<Response<UserResponseDto, Record<string, any>>> {
     const user = await this.usersService.createNewUser(request.body);
-
-    session.user = user;
 
     return response.status(HttpStatus.CREATED).json({
       statusCode: HttpStatus.CREATED,
