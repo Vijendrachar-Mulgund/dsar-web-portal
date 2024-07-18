@@ -1,5 +1,5 @@
-export enum Roles {
+export enum Role {
   admin = 'ADMIN',
-  teamMember = 'TEAMMEMBER',
   teamLeader = 'TEAMLEADER',
+  teamMember = 'TEAMMEMBER',
 }

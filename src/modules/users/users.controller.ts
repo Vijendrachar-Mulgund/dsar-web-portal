@@ -4,19 +4,24 @@ import {
   Post,
   Req,
   Res,
-  Session,
-  UnauthorizedException,
+  UseGuards,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 
 import { UsersService } from './users.service';
 import { UserResponseDto } from './dto/UserResponse.dto';
+import { Role } from '../../enums/Role.enum';
+import { Roles } from '../../decorators/roles.decorator';
+import { RolesGuard } from '../../guards/roles.guard';
+import { AuthGuard } from '../../guards/auth.service';
 
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Post('register')
+  @Roles(Role.admin)
+  @UseGuards(AuthGuard, RolesGuard)
   async registerNewUser(
     @Req() request: Request,
     @Res() response: Response,
