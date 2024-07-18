@@ -1,9 +1,6 @@
 import {
-  BadRequestException,
   Controller,
   HttpStatus,
-  NotAcceptableException,
-  NotFoundException,
   Post,
   Req,
   Res,
@@ -14,7 +11,6 @@ import { Request, Response } from 'express';
 
 import { AuthResponse } from './dto/AuthResponse.dto';
 import { AuthService } from './auth.service';
-import { request } from 'http';
 
 @Controller('auth')
 export class AuthController {
@@ -39,9 +35,10 @@ export class AuthController {
 
       const { password, ...result } = user;
 
-      session.user = result;
+      session.userID = user._id;
+      session.role = user.role;
 
-      return response.json({
+      return response.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,
         message: 'Login successful!',
         user: result,
@@ -59,14 +56,22 @@ export class AuthController {
     @Res() response: Response,
   ): Promise<Response<AuthResponse, Record<string, any>>> {
     try {
-      if (!session.user) {
+      if (!session.userID) {
         throw new Error('You are not logged in!');
       }
 
-      return response.json({
+      const user = await this.authService.authenticateUser(session.userID);
+
+      if (!user) {
+        throw new Error('User not found!');
+      }
+
+      const { password, ...result } = user;
+
+      return response.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,
         message: 'You are logged in!',
-        user: session.user,
+        user: result,
       });
     } catch (error: any) {
       throw new UnauthorizedException(
@@ -81,7 +86,7 @@ export class AuthController {
     @Res() response: Response,
   ): Promise<Response<AuthResponse, Record<string, any>>> {
     try {
-      if (!session.user) {
+      if (!session.userID) {
         throw new Error('You are not logged in!');
       }
 

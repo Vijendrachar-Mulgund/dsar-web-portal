@@ -35,6 +35,10 @@ export class UsersService {
     return this.userModel.findOne({ email: email }).lean();
   }
 
+  async findUserById(id: string): Promise<UserDocument> {
+    return this.userModel.findById(id).lean();
+  }
+
   async findUserByIdAndUpdate(
     id: string,
     userinfo: UserInfoDto,

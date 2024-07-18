@@ -23,8 +23,10 @@ export class AuthService {
 
     if (!isPasswordValid) return null;
 
-    console.log(`User: ${user._id} !!!`);
-
     return user;
+  }
+
+  async authenticateUser(id: string): Promise<UserDocument> {
+    return this.usersService.findUserById(id);
   }
 }
