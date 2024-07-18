@@ -1,6 +1,7 @@
 import {
   Controller,
   HttpStatus,
+  Patch,
   Post,
   Req,
   Res,
@@ -71,6 +72,45 @@ export class AuthController {
       return response.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,
         message: 'You are logged in!',
+        user: result,
+      });
+    } catch (error: any) {
+      throw new UnauthorizedException(
+        error.message || 'Something went wrong. Please try again later!',
+      );
+    }
+  }
+
+  @Patch('change-password')
+  async changePassword(
+    @Session() session: Record<string, any>,
+    @Req() request: Request,
+    @Res() response: Response,
+  ): Promise<Response<AuthResponse, Record<string, any>>> {
+    try {
+      if (!session.userID) {
+        throw new Error('You are not logged in!');
+      }
+
+      if (!request.body.password || !request.body.newPassword) {
+        throw new Error('Please enter a valid Password!');
+      }
+
+      const user = await this.authService.changePassword(
+        session.userID,
+        request.body.password,
+        request.body.newPassword,
+      );
+
+      if (!user) {
+        throw new Error('Please check your Password and try again!');
+      }
+
+      const { password, ...result } = user;
+
+      return response.status(HttpStatus.OK).json({
+        statusCode: HttpStatus.OK,
+        message: 'Password changed successfully!',
         user: result,
       });
     } catch (error: any) {

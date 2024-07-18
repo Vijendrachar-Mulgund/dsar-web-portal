@@ -5,13 +5,14 @@ import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 
 import { User, UserDocument } from '../../schemas/User.schema';
-import { UserInfoDto } from './dto/UserInfo.dto';
+import { CreateNewUserDto } from './dto/CreateNewUser.dto';
+import { ChangePasswordDto } from './dto/ChangePassword.dto';
 
 @Injectable()
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  async createNewUser(createNewUser: UserInfoDto): Promise<UserDocument> {
+  async createNewUser(createNewUser: CreateNewUserDto): Promise<UserDocument> {
     const saltRounds = +process.env.PASSWORD_SALT_ROUNDS;
     const defaultPassword = process.env.PASSWORD_DEFAULT;
 
@@ -39,15 +40,15 @@ export class UsersService {
     return this.userModel.findById(id).lean();
   }
 
-  async findUserByIdAndUpdate(
+  async findUserByIdAndUpdatePassword(
     id: string,
-    userinfo: UserInfoDto,
+    changePasswordData: ChangePasswordDto,
   ): Promise<UserDocument> {
     return this.userModel
       .findByIdAndUpdate(
         id,
         {
-          ...userinfo,
+          ...changePasswordData,
         },
         { new: true },
       )

@@ -7,7 +7,7 @@ import {
 } from 'class-validator';
 import { Roles } from '../../../enums/Roles.enum';
 
-export class UserInfoDto {
+export class CreateNewUserDto {
   @IsEmail()
   @IsNotEmpty()
   @IsOptional()
