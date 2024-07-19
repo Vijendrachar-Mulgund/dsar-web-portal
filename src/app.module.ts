@@ -4,6 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ServerModule } from './modules/server/server.module';
+import { databaseConnectionUrl } from './utils/config/mongodb';
 
 @Module({
   imports: [
@@ -11,7 +12,7 @@ import { ServerModule } from './modules/server/server.module';
       envFilePath: ['.env', '.env.development.local', '.env.production'],
       isGlobal: true,
     }),
-    MongooseModule.forRoot(process.env.DATABASE_CONNECTION_URL),
+    MongooseModule.forRoot(databaseConnectionUrl()),
     UsersModule,
     AuthModule,
     ServerModule,
