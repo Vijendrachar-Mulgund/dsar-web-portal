@@ -46,10 +46,13 @@ export class AuthService {
     const saltRounds = +process.env.PASSWORD_SALT_ROUNDS;
     const encryptedPassword = await bcrypt.hash(newPassword, saltRounds);
 
-    return this.usersService.findUserByIdAndUpdatePassword(userID, {
-      password: encryptedPassword,
-      isDefaultPassword: false,
-      updatedAt: new Date().toISOString(),
-    });
+    const email = user.email;
+
+    return this.usersService.findUserByIdAndUpdatePassword(
+      userID,
+      email,
+      encryptedPassword,
+      false,
+    );
   }
 }

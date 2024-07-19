@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   HttpStatus,
+  Patch,
   Post,
   Req,
   Res,
@@ -72,6 +73,42 @@ export class UsersController {
         statusCode: HttpStatus.OK,
         message: 'All users',
         users,
+      });
+    } catch (error) {
+      throw new BadRequestException(
+        error.message || 'Something went wrong. Please try again later!',
+      );
+    }
+  }
+
+  @Patch('toggle-account-status')
+  @Roles(Role.admin)
+  @UseGuards(AuthGuard, RolesGuard)
+  async deactivateAccount(@Req() request: Request, @Res() response: Response) {
+    try {
+      const user =
+        await this.usersService.findUserByEmailAndToggleAccountStatus(
+          request.body.email,
+          request.body.id,
+          request.body.currentStatus,
+        );
+
+      if (!user) {
+        throw new Error('The user account could not be deactivated!');
+      }
+
+      const result = {
+        email: user.email,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        role: user.role,
+        isAccountActive: user.isAccountActive,
+      };
+
+      return response.status(HttpStatus.OK).json({
+        statusCode: HttpStatus.OK,
+        message: 'The user account is deactivated',
+        user: result,
       });
     } catch (error) {
       throw new BadRequestException(

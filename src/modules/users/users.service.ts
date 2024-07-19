@@ -6,7 +6,6 @@ import * as bcrypt from 'bcrypt';
 
 import { User, UserDocument } from '../../schemas/User.schema';
 import { CreateNewUserDto } from './dto/CreateNewUser.dto';
-import { ChangePasswordDto } from './dto/ChangePassword.dto';
 
 @Injectable()
 export class UsersService {
@@ -46,13 +45,30 @@ export class UsersService {
 
   async findUserByIdAndUpdatePassword(
     id: string,
-    changePasswordData: ChangePasswordDto,
+    email: string,
+    password: string,
+    isDefaultPassword: boolean,
   ): Promise<UserDocument> {
     return this.userModel
       .findByIdAndUpdate(
-        id,
+        { email: email, _id: id },
+        { password, isDefaultPassword, updatedAt: new Date().toISOString() },
+        { new: true },
+      )
+      .lean();
+  }
+
+  async findUserByEmailAndToggleAccountStatus(
+    email: string,
+    id: string,
+    currentStatus: boolean,
+  ): Promise<UserDocument> {
+    return this.userModel
+      .findOneAndUpdate(
+        { email: email, _id: id },
         {
-          ...changePasswordData,
+          isAccountActive: !currentStatus,
+          updatedAt: new Date().toISOString(),
         },
         { new: true },
       )

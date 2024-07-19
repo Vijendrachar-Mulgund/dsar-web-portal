@@ -36,8 +36,13 @@ export class AuthController {
         throw new Error(`The Email or Password is incorrect!`);
       }
 
+      if (!user.isAccountActive) {
+        throw new Error(`Your account is not active!`);
+      }
+
       const { password, ...result } = user;
 
+      // Create the User session
       session.userID = user._id;
       session.role = user.role;
 
