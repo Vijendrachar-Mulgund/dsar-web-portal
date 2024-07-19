@@ -20,6 +20,9 @@ export class User {
   @Prop({ required: true })
   lastname: string;
 
+  @Prop({ required: true, default: true })
+  isAccountActive: boolean;
+
   @Prop({ enum: Role, required: true })
   role: string;
 

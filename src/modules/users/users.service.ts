@@ -32,6 +32,10 @@ export class UsersService {
     return await newUserModel.save();
   }
 
+  async getAllUsers(): Promise<UserDocument[]> {
+    return this.userModel.aggregate([{ $unset: ['password'] }]).exec();
+  }
+
   async findUserByEmail(email: string): Promise<UserDocument> {
     return this.userModel.findOne({ email: email }).lean();
   }

@@ -7,11 +7,13 @@ import {
   Res,
   Session,
   UnauthorizedException,
+  UseGuards,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 
 import { AuthResponse } from './dto/AuthResponse.dto';
 import { AuthService } from './auth.service';
+import { AuthGuard } from 'src/guards/auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -52,8 +54,10 @@ export class AuthController {
   }
 
   @Post('authenticate')
+  @UseGuards(AuthGuard)
   async authenticate(
     @Session() session: Record<string, any>,
+    @Req() request: Request,
     @Res() response: Response,
   ): Promise<Response<AuthResponse, Record<string, any>>> {
     try {
@@ -61,13 +65,7 @@ export class AuthController {
         throw new Error('You are not logged in!');
       }
 
-      const user = await this.authService.authenticateUser(session.userID);
-
-      if (!user) {
-        throw new Error('User not found!');
-      }
-
-      const { password, ...result } = user;
+      const result = request['user'];
 
       return response.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,
@@ -82,6 +80,7 @@ export class AuthController {
   }
 
   @Patch('change-password')
+  @UseGuards(AuthGuard)
   async changePassword(
     @Session() session: Record<string, any>,
     @Req() request: Request,
@@ -121,6 +120,7 @@ export class AuthController {
   }
 
   @Post('sign-out')
+  @UseGuards(AuthGuard)
   async signOut(
     @Session() session: Record<string, any>,
     @Res() response: Response,
