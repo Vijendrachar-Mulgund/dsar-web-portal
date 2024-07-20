@@ -5,6 +5,8 @@ import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ServerModule } from './modules/server/server.module';
 import { databaseConnectionUrl } from './utils/config/mongodb';
+import { ChatGateway } from './modules/chat/chat.gateway';
+import { ChatModule } from './modules/chat/chat.module';
 
 @Module({
   imports: [
@@ -16,8 +18,9 @@ import { databaseConnectionUrl } from './utils/config/mongodb';
     UsersModule,
     AuthModule,
     ServerModule,
+    ChatModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [ChatGateway],
 })
 export class AppModule {}
