@@ -5,7 +5,7 @@ import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ServerModule } from './modules/server/server.module';
 import { databaseConnectionUrl } from './utils/config/mongodb';
-import { ChatModule } from './modules/chat/chat.module';
+import { CaseModule } from './modules/case/case.module';
 
 @Module({
   imports: [
@@ -17,7 +17,7 @@ import { ChatModule } from './modules/chat/chat.module';
     UsersModule,
     AuthModule,
     ServerModule,
-    ChatModule,
+    CaseModule,
   ],
 })
 export class AppModule {}

@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ChatGateway } from './chat.gateway';
-import { ChatService } from './chat.service';
-import { ChatController } from './chat.controller';
+import { CaseService } from './case.service';
+import { CaseController } from './case.controller';
 import { Case, CaseSchema } from '../../schemas/Case.schema';
 
 @Module({
@@ -14,7 +14,7 @@ import { Case, CaseSchema } from '../../schemas/Case.schema';
       },
     ]),
   ],
-  providers: [ChatService, ChatGateway],
-  controllers: [ChatController],
+  providers: [CaseService, ChatGateway],
+  controllers: [CaseController],
 })
-export class ChatModule {}
+export class CaseModule {}

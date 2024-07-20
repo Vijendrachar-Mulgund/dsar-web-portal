@@ -12,6 +12,12 @@ export class Case {
   @Prop()
   status: string;
 
+  @Prop()
+  createdAt: Date;
+
+  @Prop()
+  updatedAt: Date;
+
   @Prop({ type: Array, default: [{}] })
   conversation: Array<Object>;
 }
