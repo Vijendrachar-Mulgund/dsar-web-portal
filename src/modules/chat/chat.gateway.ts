@@ -4,6 +4,7 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
+import { ChatService } from './chat.service';
 
 @WebSocketGateway({
   cors: {
@@ -14,6 +15,8 @@ import { Server, Socket } from 'socket.io';
 export class ChatGateway {
   @WebSocketServer()
   server: Server;
+
+  constructor(private chatService: ChatService) {}
 
   @SubscribeMessage('joinRoom')
   handleJoinRoom(client: Socket, room: string): void {
@@ -28,10 +31,12 @@ export class ChatGateway {
   }
 
   @SubscribeMessage('chatToServer')
-  handleMessage(
-    client: Socket,
-    message: { sender: string; room: string; message: string },
-  ): void {
-    this.server.to(message.room).emit('chatToClient', message);
+  handleMessage(client: Socket, message: string): void {
+    this.chatService.processMessage(message).then((response) => {
+      this.server.emit('chatToClient', {
+        sender: 'AI',
+        message: response,
+      });
+    });
   }
 }
