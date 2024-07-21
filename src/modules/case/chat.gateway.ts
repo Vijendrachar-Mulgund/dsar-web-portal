@@ -6,10 +6,8 @@ import {
 import { Server, Socket } from 'socket.io';
 import { CaseService } from './case.service';
 
-@WebSocketGateway(3001, {
-  cors: {
-    origin: '*',
-  },
+@WebSocketGateway({
+  cors: { origin: '*' },
 })
 export class ChatGateway {
   @WebSocketServer()
@@ -17,11 +15,19 @@ export class ChatGateway {
 
   constructor(private caseService: CaseService) {}
 
-  @SubscribeMessage('chatToServer')
-  async handleMessage(client: Socket, message: string): Promise<void> {
-    const response = await this.caseService.processMessage(message);
+  @SubscribeMessage('chat-to-server')
+  async handleMessage(client: Socket, prompt: string): Promise<void> {
+    console.log('Prompt', prompt);
+    const promptJSON = JSON.parse(prompt);
 
-    this.server.emit('chatToClient', {
+    const response = await this.caseService.chatGPT(
+      promptJSON.room,
+      promptJSON.message,
+    );
+
+    console.log('response');
+
+    this.server.emit('chat-to-client', {
       sender: 'AI',
       message: response,
     });

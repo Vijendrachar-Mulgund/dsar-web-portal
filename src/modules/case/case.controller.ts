@@ -7,6 +7,11 @@ export class CaseController {
 
   @Post('create-new-case')
   async createNewCase(@Body() data: any) {
-    return await this.caseService.createNewCase(data);
+    return await this.caseService.createNewCase({
+      ...data,
+      status: 'open',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
   }
 }

@@ -18,7 +18,7 @@ export class Case {
   @Prop()
   updatedAt: Date;
 
-  @Prop({ type: Array, default: [{}] })
+  @Prop({ type: Array, default: [] })
   conversation: Array<Object>;
 }
 

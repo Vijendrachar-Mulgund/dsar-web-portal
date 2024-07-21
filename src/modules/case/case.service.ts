@@ -17,13 +17,29 @@ export class CaseService {
     return newCase;
   }
 
-  async processMessage(message: string): Promise<any> {
+  async chatGPT(roomID: string, message: string): Promise<any> {
+    console.log('roomID', roomID);
+    const conversation = await this.caseModel.findById(roomID);
+
+    const conversationArray = conversation.conversation;
+
+    console.log('Test', conversation);
+
     const aiResponse = await ollama.chat({
       model: 'llama3',
       messages: [{ role: 'user', content: message }],
     });
 
     const response = aiResponse.message.content;
+
+    conversationArray.push({
+      role: 'AI',
+      content: response,
+    });
+
+    await this.caseModel.findByIdAndUpdate(roomID, {
+      conversation: conversationArray,
+    });
 
     return response;
   }
