@@ -1,23 +1,25 @@
-export const databaseConnectionUrl = (): string => {
-  const connectionString: string = process.env.DATABASE_CONNECTION_URL;
-  const connectionPassword: string = process.env.DATABASE_PASSWORD;
-  const databaseName: string = process.env.DATABASE_NAME;
-  const username: string = process.env.DATABASE_USERNAME;
-
+export const databaseConnectionUrl = (
+  connectionString: string,
+  databaseName: string,
+  username?: string,
+  password?: string,
+): string => {
   let connectionStringWithCredentials = connectionString.replace(
     '<database_name>',
     databaseName,
   );
 
-  connectionStringWithCredentials = connectionStringWithCredentials.replace(
-    '<password>',
-    connectionPassword,
-  );
+  if (password && username) {
+    connectionStringWithCredentials = connectionStringWithCredentials.replace(
+      '<username>',
+      username,
+    );
 
-  connectionStringWithCredentials = connectionStringWithCredentials.replace(
-    '<username>',
-    username,
-  );
+    connectionStringWithCredentials = connectionStringWithCredentials.replace(
+      '<password>',
+      password,
+    );
+  }
 
   return connectionStringWithCredentials;
 };

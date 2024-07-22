@@ -13,7 +13,14 @@ import { CaseModule } from './modules/case/case.module';
       envFilePath: ['.env', '.env.development.local', '.env.production'],
       isGlobal: true,
     }),
-    MongooseModule.forRoot(databaseConnectionUrl()),
+    MongooseModule.forRoot(
+      databaseConnectionUrl(
+        process.env.DATABASE_CONNECTION_URL,
+        process.env.DATABASE_NAME,
+        process.env.DATABASE_USERNAME,
+        process.env.DATABASE_PASSWORD,
+      ),
+    ),
     UsersModule,
     AuthModule,
     ServerModule,

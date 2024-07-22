@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import * as session from 'express-session';
 
 import { AppModule } from './app.module';
+import { databaseConnectionUrl } from './utils/config/mongodb';
 
 const MongoStore = require('connect-mongo');
 
@@ -17,7 +18,12 @@ async function bootstrap() {
   const sessionCookieMaxAge = +process.env.SESSION_COOKIE_MAX_AGE;
   const sessionCookieName = process.env.SESSION_COOKIE_NAME;
 
-  const sessionsDatabaseURL = process.env.SESSION_STORE_DATABASE_URL;
+  const sessionsDatabaseURL = databaseConnectionUrl(
+    process.env.SESSION_STORE_DATABASE_URL,
+    process.env.SESSION_STORE_DATABASE_NAME,
+    process.env.SESSION_STORE_DATABASE_USERNAME,
+    process.env.SESSION_STORE_DATABASE_PASSWORD,
+  );
 
   const sessionsDatabase = MongoStore.create({
     mongoUrl: sessionsDatabaseURL,
