@@ -3,8 +3,10 @@ import * as session from 'express-session';
 
 import { AppModule } from './app.module';
 import { databaseConnectionUrl } from './utils/config/mongodb';
+import { Logger } from '@nestjs/common';
 
 const MongoStore = require('connect-mongo');
+const os = require('os');
 
 async function bootstrap() {
   // Nest Create new Server
@@ -52,5 +54,7 @@ async function bootstrap() {
 
   // Server Run 🚀
   await app.listen(port);
+
+  Logger.log(`Server running on ${os.hostname()}:${port}`, 'Bootstrap');
 }
 bootstrap();
