@@ -40,6 +40,7 @@ async function bootstrap() {
       saveUninitialized: false,
       store: sessionsDatabase,
       cookie: {
+        httpOnly: true,
         secure: sessionCookieSecure,
         maxAge: sessionCookieMaxAge,
       },
@@ -50,7 +51,11 @@ async function bootstrap() {
   app.setGlobalPrefix(`${version}/api`);
 
   // CORS Config
-  app.enableCors();
+  app.enableCors({
+    allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept',
+    origin: process.env.CORS_ORIGIN,
+    credentials: true,
+  });
 
   // Server Run 🚀
   await app.listen(port);
