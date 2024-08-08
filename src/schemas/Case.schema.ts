@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
+import { O } from 'ollama/dist/shared/ollama.6680e40f';
 import { CaseStatus } from 'src/enums/CaseStatus.enum';
 
 @Schema()
@@ -19,12 +20,18 @@ export class Case {
   @Prop({ type: String })
   liveVideoURL: string;
 
+  // GeoJSON Point - [longitude, latitude]
   @Prop({ type: Object, coordinates: [Number] })
   location: {
     type: { type: string };
-    // GeoJSON Point - [longitude, latitude]
     coordinates: [number];
   };
+
+  @Prop({ type: Object })
+  weather: Object;
+
+  @Prop({ type: Number })
+  numberOfPeopleFound: number;
 
   @Prop({ type: Date, required: true, default: Date.now() })
   createdAt: Date;

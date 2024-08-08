@@ -1,4 +1,11 @@
-import { IsBoolean, IsEmail, IsOptional, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsEmail,
+  IsNumber,
+  IsObject,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CaseDto {
   @IsEmail()
@@ -20,6 +27,14 @@ export class CaseDto {
   @IsBoolean()
   @IsOptional()
   status?: boolean;
+
+  @IsObject()
+  @IsOptional()
+  weather?: Object;
+
+  @IsNumber()
+  @IsOptional()
+  numberOfPeopleFound?: number;
 
   @IsString()
   @IsOptional()
