@@ -1,7 +1,8 @@
 import { Controller, Post, Delete, Get, Param, Body } from '@nestjs/common';
 import { CaseService } from './case.service';
+import { CaseStatus } from 'src/enums/CaseStatus.enum';
 
-@Controller('chat')
+@Controller('case')
 export class CaseController {
   constructor(private caseService: CaseService) {}
 
@@ -9,9 +10,14 @@ export class CaseController {
   async createNewCase(@Body() data: any) {
     return await this.caseService.createNewCase({
       ...data,
-      status: 'open',
+      status: CaseStatus.open,
       createdAt: new Date(),
       updatedAt: new Date(),
     });
+  }
+
+  @Get('get-all-cases')
+  async getAllCases() {
+    return await this.caseService.getAllCases();
   }
 }

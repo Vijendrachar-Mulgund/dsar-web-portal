@@ -1,25 +1,35 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
+import { CaseStatus } from 'src/enums/CaseStatus.enum';
 
 @Schema()
 export class Case {
-  @Prop()
-  title: String;
+  @Prop({ type: String, required: true })
+  title: string;
 
-  @Prop()
+  @Prop({ type: String, required: true })
   description: string;
 
-  @Prop()
+  @Prop({ type: String, enum: CaseStatus, required: true })
   status: string;
 
-  @Prop()
+  @Prop({ type: String })
+  videoURL: string;
+
+  @Prop({ type: String })
+  liveVideoURL: string;
+
+  @Prop({ type: Object, coordinates: [Number] })
+  location: {
+    type: { type: string };
+    coordinates: [number];
+  };
+
+  @Prop({ type: Date, required: true, default: Date.now() })
   createdAt: Date;
 
-  @Prop()
+  @Prop({ type: Date, required: true, default: Date.now() })
   updatedAt: Date;
-
-  @Prop({ type: Array, default: [] })
-  conversation: Array<Object>;
 }
 
 export const CaseSchema = SchemaFactory.createForClass(Case);

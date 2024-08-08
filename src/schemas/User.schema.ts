@@ -5,34 +5,34 @@ import { Role } from 'src/enums/Role.enum';
 
 @Schema()
 export class User {
-  @Prop({ unique: true, required: true })
+  @Prop({ type: String, unique: true, required: true })
   email: string;
 
-  @Prop({ required: true, minlength: 10 })
+  @Prop({ type: String, required: true, minlength: 10 })
   password: string;
 
-  @Prop({ required: true, default: true })
+  @Prop({ type: Boolean, required: true, default: true })
   isDefaultPassword: boolean;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   firstname: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   lastname: string;
 
-  @Prop({ required: true, default: true })
+  @Prop({ type: Boolean, required: true, default: true })
   isAccountActive: boolean;
 
-  @Prop({ enum: Role, required: true })
+  @Prop({ type: String, enum: Role, required: true })
   role: string;
 
-  @Prop()
+  @Prop({ type: Date, required: true, default: Date.now() })
   createdAt: Date;
 
-  @Prop()
+  @Prop({ type: Date, required: true, default: Date.now() })
   updatedAt: Date;
 
-  @Prop()
+  @Prop({ type: Date })
   lastLogin: Date;
 }
 
