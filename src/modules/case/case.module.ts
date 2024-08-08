@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ChatGateway } from './chat.gateway';
 import { CaseService } from './case.service';
 import { CaseController } from './case.controller';
 import { Case, CaseSchema } from '../../schemas/Case.schema';
@@ -14,7 +13,7 @@ import { Case, CaseSchema } from '../../schemas/Case.schema';
       },
     ]),
   ],
-  providers: [CaseService, ChatGateway],
+  providers: [CaseService],
   controllers: [CaseController],
 })
 export class CaseModule {}
