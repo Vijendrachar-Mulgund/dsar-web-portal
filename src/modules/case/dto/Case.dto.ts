@@ -1,6 +1,6 @@
-import { IsEmail, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsEmail, IsOptional, IsString } from 'class-validator';
 
-export class CreateNewCaseDto {
+export class CaseDto {
   @IsEmail()
   @IsOptional()
   title?: string;
@@ -16,6 +16,10 @@ export class CreateNewCaseDto {
   @IsString()
   @IsOptional()
   liveVideoURL?: string;
+
+  @IsBoolean()
+  @IsOptional()
+  status?: boolean;
 
   @IsString()
   @IsOptional()

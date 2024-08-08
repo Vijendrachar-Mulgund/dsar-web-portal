@@ -7,12 +7,12 @@ import {
   Req,
   Res,
   HttpStatus,
+  Put,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { CaseService } from './case.service';
-import { CreateNewCaseDto } from './dto/CreateNewCase.dto';
+import { CaseDto } from './dto/Case.dto';
 import { CaseResponseDto } from './dto/CaseResponse.dto';
-import { stat } from 'fs';
 import { AllCaseResponseDto } from './dto/AllCaseResponse.dto';
 
 @Controller('case')
@@ -25,7 +25,7 @@ export class CaseController {
     @Res() response: Response,
   ): Promise<Response<CaseResponseDto, Record<string, any>>> {
     try {
-      const body: CreateNewCaseDto = request.body;
+      const body: CaseDto = request.body;
       const newCase = await this.caseService.createNewCase(body);
 
       if (!newCase) {
@@ -35,6 +35,32 @@ export class CaseController {
       return response.status(HttpStatus.CREATED).json({
         statusCode: HttpStatus.CREATED,
         message: 'The New case is created',
+        case: newCase,
+      });
+    } catch (error) {
+      throw new BadRequestException(
+        error.message || 'Something went wrong. Please try again later!',
+      );
+    }
+  }
+
+  @Put('update-case/:caseId')
+  async updateCase(
+    @Req() request: Request,
+    @Res() response: Response,
+  ): Promise<Response<CaseResponseDto, Record<string, any>>> {
+    try {
+      const body: CaseDto = request.body;
+      const caseId: String = request.params.caseId;
+      const newCase = await this.caseService.updateCase(caseId, body);
+
+      if (!newCase) {
+        throw new Error('The case could not be updated!');
+      }
+
+      return response.status(HttpStatus.OK).json({
+        statusCode: HttpStatus.OK,
+        message: 'The case has been updated',
         case: newCase,
       });
     } catch (error) {

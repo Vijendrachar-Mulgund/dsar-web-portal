@@ -5,12 +5,13 @@ import ollama from 'ollama';
 
 import { Case } from '../../schemas/Case.schema';
 import { CaseStatus } from 'src/enums/CaseStatus.enum';
+import { CaseDto } from './dto/Case.dto';
 
 @Injectable()
 export class CaseService {
   constructor(@InjectModel(Case.name) private caseModel: Model<Case>) {}
 
-  async createNewCase(data: any): Promise<any> {
+  async createNewCase(data: CaseDto): Promise<any> {
     const newCase = new this.caseModel({
       title: data?.title,
       description: data?.description,
@@ -27,33 +28,32 @@ export class CaseService {
     return newCase;
   }
 
+  async updateCase(caseId: String, data: CaseDto): Promise<any> {
+    const updateData = { ...data, updatedAt: new Date().toISOString() };
+
+    const updatedCase = await this.caseModel.findByIdAndUpdate(
+      caseId,
+      updateData,
+      {
+        new: true,
+        lean: true,
+      },
+    );
+
+    return updatedCase;
+  }
+
   async getAllCases(): Promise<any> {
     return await this.caseModel.find().lean();
   }
 
   async chatGPT(roomID: string, message: string): Promise<any> {
-    console.log('roomID', roomID);
-    const conversation = await this.caseModel.findById(roomID);
-
-    // const conversationArray = conversation.conversation;
-
-    console.log('Test', conversation);
-
     const aiResponse = await ollama.chat({
       model: 'llama3',
       messages: [{ role: 'user', content: message }],
     });
 
     const response = aiResponse.message.content;
-
-    // conversationArray.push({
-    //   role: 'AI',
-    //   content: response,
-    // });
-
-    // await this.caseModel.findByIdAndUpdate(roomID, {
-    //   conversation: conversationArray,
-    // });
 
     return response;
   }
