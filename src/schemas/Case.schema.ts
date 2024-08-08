@@ -22,6 +22,7 @@ export class Case {
   @Prop({ type: Object, coordinates: [Number] })
   location: {
     type: { type: string };
+    // GeoJSON Point - [longitude, latitude]
     coordinates: [number];
   };
 

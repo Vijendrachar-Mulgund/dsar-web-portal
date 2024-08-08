@@ -4,13 +4,23 @@ import { Model } from 'mongoose';
 import ollama from 'ollama';
 
 import { Case } from '../../schemas/Case.schema';
+import { CaseStatus } from 'src/enums/CaseStatus.enum';
 
 @Injectable()
 export class CaseService {
   constructor(@InjectModel(Case.name) private caseModel: Model<Case>) {}
 
   async createNewCase(data: any): Promise<any> {
-    const newCase = new this.caseModel(data);
+    const newCase = new this.caseModel({
+      title: data?.title,
+      description: data?.description,
+      videoURL: data?.videoURL,
+      liveVideoURL: data?.liveVideoURL,
+      location: data?.location,
+      status: CaseStatus.open,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    });
 
     await newCase.save();
 
