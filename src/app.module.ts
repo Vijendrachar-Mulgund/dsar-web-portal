@@ -6,8 +6,6 @@ import { AuthModule } from './modules/auth/auth.module';
 import { ServerModule } from './modules/server/server.module';
 import { databaseConnectionUrl } from './utils/config/mongodb';
 import { CaseModule } from './modules/case/case.module';
-import { ChatGateway } from './modules/chat/chat.gateway';
-import { ChatService } from './modules/chat/chat.service';
 import { ChatModule } from './modules/chat/chat.module';
 
 @Module({
@@ -30,6 +28,5 @@ import { ChatModule } from './modules/chat/chat.module';
     CaseModule,
     ChatModule,
   ],
-  providers: [ChatGateway, ChatService],
 })
 export class AppModule {}
