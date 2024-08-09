@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
-import { O } from 'ollama/dist/shared/ollama.6680e40f';
 import { CaseStatus } from 'src/enums/CaseStatus.enum';
 
 @Schema()

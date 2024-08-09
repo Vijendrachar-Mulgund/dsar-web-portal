@@ -1,11 +1,13 @@
 import {
   IsBoolean,
   IsEmail,
+  IsEnum,
   IsNumber,
   IsObject,
   IsOptional,
   IsString,
 } from 'class-validator';
+import { CaseStatus } from 'src/enums/CaseStatus.enum';
 
 export class CaseDto {
   @IsEmail()
@@ -24,7 +26,7 @@ export class CaseDto {
   @IsOptional()
   liveVideoURL?: string;
 
-  @IsBoolean()
+  @IsEnum(CaseStatus, { each: true })
   @IsOptional()
   status?: boolean;
 
