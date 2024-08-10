@@ -15,6 +15,8 @@ export class UsersService {
     const saltRounds = +process.env.PASSWORD_SALT_ROUNDS;
     const defaultPassword = process.env.PASSWORD_DEFAULT;
 
+    console.log('default', User.name);
+
     const encryptedPassword = await bcrypt.hash(defaultPassword, saltRounds);
 
     const newUserModel = new this.userModel({

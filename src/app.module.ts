@@ -7,6 +7,7 @@ import { ServerModule } from './modules/server/server.module';
 import { databaseConnectionUrl } from './utils/config/mongodb';
 import { CaseModule } from './modules/case/case.module';
 import { ChatModule } from './modules/chat/chat.module';
+import { DronesModule } from './modules/drones/drones.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ChatModule } from './modules/chat/chat.module';
     ServerModule,
     CaseModule,
     ChatModule,
+    DronesModule,
   ],
 })
 export class AppModule {}

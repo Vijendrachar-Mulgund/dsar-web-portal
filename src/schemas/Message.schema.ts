@@ -14,17 +14,12 @@ export class Message {
   @Prop({ type: String, enum: SenderType, required: true })
   senderType: string;
 
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: User.name })
-  user: MongooseSchema.Types.ObjectId;
-
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: Drone.name })
-  drone: MongooseSchema.Types.ObjectId;
-
   @Prop({
     type: MongooseSchema.Types.ObjectId,
-    ref: ArtificialIntelligence.name,
+    refPath: 'senderType',
+    required: true,
   })
-  artificialIntelligence: MongooseSchema.Types.ObjectId;
+  sender: MongooseSchema.Types.ObjectId;
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: Case.name, required: true })
   case: MongooseSchema.Types.ObjectId;

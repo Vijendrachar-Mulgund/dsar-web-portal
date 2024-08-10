@@ -9,6 +9,9 @@ export class Drone {
   @Prop({ type: String, required: true })
   model: string;
 
+  @Prop({ type: String, required: true, unique: true })
+  serialNumber: string;
+
   @Prop({ type: Date, required: true })
   createdAt: Date;
 
