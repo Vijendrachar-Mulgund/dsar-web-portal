@@ -60,6 +60,9 @@ async function bootstrap() {
   // Server Run 🚀
   await app.listen(port);
 
-  Logger.log(`Server running on ${os.hostname()}:${port}`, 'Bootstrap');
+  Logger.log(
+    `Nest JS RESTful API Server running on ${os.hostname()}:${port}`,
+    'Bootstrap',
+  );
 }
 bootstrap();
