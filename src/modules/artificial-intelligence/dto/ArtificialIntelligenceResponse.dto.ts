@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsString } from 'class-validator';
-import { Drone } from 'src/schemas/Drone.schema';
+import { Drone } from 'src/schemas/drone.schema';
 
 export class ArtificialIntelligenceResponseDto {
   @IsString()

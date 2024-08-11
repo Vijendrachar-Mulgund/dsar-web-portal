@@ -5,7 +5,7 @@ import {
   IsObject,
   IsString,
 } from 'class-validator';
-import { Drone } from 'src/schemas/Drone.schema';
+import { Drone } from 'src/schemas/drone.schema';
 
 export class DroneResponseDto {
   @IsNumber()

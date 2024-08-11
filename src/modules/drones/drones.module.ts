@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { DronesService } from './drones.service';
 import { DronesController } from './drones.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Drone, DroneSchema } from 'src/schemas/Drone.schema';
+import { Drone, DroneSchema } from 'src/schemas/drone.schema';
 import { UsersModule } from '../users/users.module';
 
 @Module({

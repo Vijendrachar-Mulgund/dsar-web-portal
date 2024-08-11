@@ -6,7 +6,7 @@ import {
   IsString,
 } from 'class-validator';
 
-import { Case } from '../../../schemas/Case.schema';
+import { Case } from '../../../schemas/case.schema';
 
 export class CaseResponseDto {
   @IsNumber()

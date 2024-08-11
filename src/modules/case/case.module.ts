@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CaseService } from './case.service';
 import { CaseController } from './case.controller';
-import { Case, CaseSchema } from '../../schemas/Case.schema';
+import { Case, CaseSchema } from '../../schemas/case.schema';
 
 @Module({
   imports: [

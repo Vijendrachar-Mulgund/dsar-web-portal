@@ -3,7 +3,7 @@ import * as bcrypt from 'bcrypt';
 
 import { AuthSignInRequestDto } from './dto/AuthSignInRequest.dto';
 import { UsersService } from '../users/users.service';
-import { UserDocument } from '../../schemas/User.schema';
+import { UserDocument } from '../../schemas/user.schema';
 
 @Injectable()
 export class AuthService {

@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import ollama from 'ollama';
 
-import { Case } from '../../schemas/Case.schema';
+import { Case } from '../../schemas/case.schema';
 import { CaseStatus } from 'src/enums/CaseStatus.enum';
 import { CaseDto } from './dto/Case.dto';
 

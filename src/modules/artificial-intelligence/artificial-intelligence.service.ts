@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import {
   ArtificialIntelligence,
   ArtificialIntelligenceDocument,
-} from 'src/schemas/ArtificialIntelligence.schema';
+} from 'src/schemas/artificial-intelligence.schema';
 import { ArtificialIntelligenceDto } from './dto/ArtificialIntelligence.dto';
 import { Model } from 'mongoose';
 

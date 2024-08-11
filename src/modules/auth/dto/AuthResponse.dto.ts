@@ -6,7 +6,7 @@ import {
   IsString,
 } from 'class-validator';
 
-import { User } from '../../../schemas/User.schema';
+import { User } from '../../../schemas/user.schema';
 
 export class AuthResponse {
   @IsNumber()

@@ -5,7 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import {
   ArtificialIntelligence,
   ArtificialIntelligenceSchema,
-} from 'src/schemas/ArtificialIntelligence.schema';
+} from 'src/schemas/artificial-intelligence.schema';
 import { UsersModule } from '../users/users.module';
 
 @Module({
