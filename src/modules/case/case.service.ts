@@ -6,7 +6,7 @@ import ollama from 'ollama';
 
 import { Case } from '@app/schemas/case.schema';
 import { CaseStatus } from '@app/enums/case-status.enum';
-import { CaseDto } from '@app/modules/case/dto/Case.dto';
+import { CaseDto } from '@app/modules/case/dto/case.dto';
 
 @Injectable()
 export class CaseService {

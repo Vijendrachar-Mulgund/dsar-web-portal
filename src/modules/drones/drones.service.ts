@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { Drone, DroneDocument } from '../../schemas/drone.schema';
-import { DroneDto } from './dto/Drone.dto';
+import { DroneDto } from './dto/drone.dto';
 
 @Injectable()
 export class DronesService {

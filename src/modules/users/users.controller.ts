@@ -12,7 +12,7 @@ import {
 import { Request, Response } from 'express';
 
 import { UsersService } from '@app/modules/users/users.service';
-import { UserResponseDto } from '@app/modules/users/dto/UserResponse.dto';
+import { UserResponseDto } from '@app/modules/users/dto/user-response.dto';
 import { Role } from '@app/enums/roles.enum';
 import { Roles } from '@app/decorators/roles.decorator';
 import { RolesGuard } from '@app/guards/roles.guard';

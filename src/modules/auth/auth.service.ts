@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 
-import { AuthSignInRequestDto } from './dto/AuthSignInRequest.dto';
-import { UsersService } from '../users/users.service';
-import { UserDocument } from '../../schemas/user.schema';
+import { AuthSignInRequestDto } from '@app/modules/auth/dto/auth-sign-in-request.dto';
+import { UsersService } from '@app/modules/users/users.service';
+import { UserDocument } from '@app/schemas/user.schema';
 
 @Injectable()
 export class AuthService {

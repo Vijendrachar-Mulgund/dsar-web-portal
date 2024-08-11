@@ -5,10 +5,9 @@ import {
   Res,
   ServiceUnavailableException,
 } from '@nestjs/common';
-
 import { Response } from 'express';
 
-import { HealthCheckResponseDto } from './dto/HealthCheckResponse.dto';
+import { HealthCheckResponseDto } from '@app/modules/server/dto/health-check-response.dto';
 
 @Controller('server')
 export class ServerController {

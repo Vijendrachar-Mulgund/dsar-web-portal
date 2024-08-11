@@ -6,9 +6,9 @@ import {
   IsString,
 } from 'class-validator';
 
-import { User } from 'src/schemas/user.schema';
+import { Case } from '@app/schemas/case.schema';
 
-export class UserResponseDto {
+export class AllCaseResponseDto {
   @IsNumber()
   @IsNotEmpty()
   statusCode: number;
@@ -19,5 +19,5 @@ export class UserResponseDto {
 
   @IsObject()
   @IsNotEmptyObject()
-  user: User;
+  cases: [Case];
 }

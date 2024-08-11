@@ -8,15 +8,15 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
+import { Request, Response } from 'express';
 
 import { DronesService } from '@app/modules/drones/drones.service';
 import { Roles } from '@app/decorators/roles.decorator';
 import { AuthGuard } from '@app/guards/auth.guard';
 import { RolesGuard } from '@app/guards/roles.guard';
 import { Role } from '@app/enums/roles.enum';
-import { DroneDto } from './dto/Drone.dto';
-import { Request, Response } from 'express';
-import { DroneResponseDto } from './dto/DroneResponse.dto';
+import { DroneDto } from '@app/modules/drones/dto/drone.dto';
+import { DroneResponseDto } from '@app/modules/drones/dto/drone-response.dto';
 
 @Controller('drones')
 export class DronesController {

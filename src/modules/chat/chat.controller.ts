@@ -7,10 +7,11 @@ import {
   Req,
   Res,
 } from '@nestjs/common';
-import { ChatService } from './chat.service';
-import { MessageDto } from './dto/Message.dto';
 import { Request, Response } from 'express';
-import { MessageResponseDto } from './dto/MessageResponse.dto';
+
+import { ChatService } from '@app/modules/chat/chat.service';
+import { MessageDto } from '@app/modules/chat/dto/message.dto';
+import { MessageResponseDto } from '@app/modules/chat/dto/message-response.dto';
 
 @Controller('chat')
 export class ChatController {

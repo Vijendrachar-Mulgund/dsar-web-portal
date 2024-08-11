@@ -5,6 +5,7 @@ import {
   IsNotEmpty,
   IsOptional,
 } from 'class-validator';
+
 import { Role } from '@app/enums/roles.enum';
 
 export class CreateNewUserDto {

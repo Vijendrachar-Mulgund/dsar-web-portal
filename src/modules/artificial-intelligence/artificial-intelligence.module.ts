@@ -8,7 +8,8 @@ import {
   ArtificialIntelligence,
   ArtificialIntelligenceSchema,
 } from '@app/schemas/artificial-intelligence.schema';
-import { UsersModule } from '../users/users.module';
+
+import { UsersModule } from '@app/modules/users/users.module';
 
 @Module({
   imports: [

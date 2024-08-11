@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { DronesService } from './drones.service';
-import { DronesController } from './drones.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Drone, DroneSchema } from 'src/schemas/drone.schema';
-import { UsersModule } from '../users/users.module';
+
+import { DronesService } from '@app/modules/drones/drones.service';
+import { DronesController } from '@app/modules/drones/drones.controller';
+import { Drone, DroneSchema } from '@app/schemas/drone.schema';
+import { UsersModule } from '@app/modules/users/users.module';
 
 @Module({
   imports: [
