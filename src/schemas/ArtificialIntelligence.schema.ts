@@ -9,6 +9,15 @@ export class ArtificialIntelligence {
   @Prop({ type: String, required: true })
   model: string;
 
+  @Prop({ type: String, required: true })
+  description: string;
+
+  @Prop({ type: String, required: true })
+  parameters: string;
+
+  @Prop({ type: String, required: true })
+  version: string;
+
   @Prop({ type: Date, required: true })
   createdAt: Date;
 

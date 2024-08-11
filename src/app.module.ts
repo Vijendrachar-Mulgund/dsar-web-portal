@@ -8,6 +8,7 @@ import { databaseConnectionUrl } from './utils/config/mongodb';
 import { CaseModule } from './modules/case/case.module';
 import { ChatModule } from './modules/chat/chat.module';
 import { DronesModule } from './modules/drones/drones.module';
+import { ArtificialIntelligenceModule } from './modules/artificial-intelligence/artificial-intelligence.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { DronesModule } from './modules/drones/drones.module';
     CaseModule,
     ChatModule,
     DronesModule,
+    ArtificialIntelligenceModule,
   ],
 })
 export class AppModule {}
