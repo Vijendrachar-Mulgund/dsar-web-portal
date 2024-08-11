@@ -5,7 +5,8 @@ import {
   IsNotEmpty,
   IsOptional,
 } from 'class-validator';
-import { Role } from '../../../enums/Role.enum';
+
+import { Role } from '@app/enums/roles.enum';
 
 export class CreateNewUserDto {
   @IsEmail()

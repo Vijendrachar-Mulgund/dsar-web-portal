@@ -4,8 +4,8 @@ import { Model } from 'mongoose';
 
 import * as bcrypt from 'bcrypt';
 
-import { User, UserDocument } from '../../schemas/User.schema';
-import { CreateNewUserDto } from './dto/CreateNewUser.dto';
+import { User, UserDocument } from '@app/schemas/user.schema';
+import { CreateNewUserDto } from '@app/modules/users/dto/create-new-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -14,8 +14,6 @@ export class UsersService {
   async createNewUser(createNewUser: CreateNewUserDto): Promise<UserDocument> {
     const saltRounds = +process.env.PASSWORD_SALT_ROUNDS;
     const defaultPassword = process.env.PASSWORD_DEFAULT;
-
-    console.log('default', User.name);
 
     const encryptedPassword = await bcrypt.hash(defaultPassword, saltRounds);
 

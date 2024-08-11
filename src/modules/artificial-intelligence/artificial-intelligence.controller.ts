@@ -8,14 +8,15 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { ArtificialIntelligenceService } from './artificial-intelligence.service';
 import { Request, Response } from 'express';
-import { ArtificialIntelligenceDto } from './dto/ArtificialIntelligence.dto';
-import { ArtificialIntelligenceResponseDto } from './dto/ArtificialIntelligenceResponse.dto';
-import { Roles } from 'src/decorators/roles.decorator';
-import { Role } from 'src/enums/Role.enum';
-import { RolesGuard } from 'src/guards/roles.guard';
-import { AuthGuard } from 'src/guards/auth.guard';
+
+import { ArtificialIntelligenceService } from '@app/modules/artificial-intelligence/artificial-intelligence.service';
+import { ArtificialIntelligenceRegisterRequestDto } from '@app/modules/artificial-intelligence/dto/artificial-intelligence-register-request.dto';
+import { ArtificialIntelligenceResponseDto } from '@app/modules/artificial-intelligence/dto/artificial-intelligence-Response.dto';
+import { Roles } from '@app/decorators/roles.decorator';
+import { Role } from '@app/enums/roles.enum';
+import { RolesGuard } from '@app/guards/roles.guard';
+import { AuthGuard } from '@app/guards/auth.guard';
 
 @Controller('artificial-intelligence')
 export class ArtificialIntelligenceController {
@@ -31,7 +32,7 @@ export class ArtificialIntelligenceController {
     @Res() response: Response,
   ): Promise<Response<ArtificialIntelligenceResponseDto, Record<string, any>>> {
     try {
-      const body: ArtificialIntelligenceDto = request.body;
+      const body: ArtificialIntelligenceRegisterRequestDto = request.body;
       const newAiModel =
         await this.artificialIntelligenceService.registerNewArtificialIntelligenceModel(
           body,

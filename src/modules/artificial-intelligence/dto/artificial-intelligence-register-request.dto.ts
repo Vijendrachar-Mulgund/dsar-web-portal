@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class ArtificialIntelligenceDto {
+export class ArtificialIntelligenceRegisterRequestDto {
   @IsString()
   @IsNotEmpty()
   name: string;

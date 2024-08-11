@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+
 import ollama from 'ollama';
 
-import { Case } from '../../schemas/Case.schema';
-import { CaseStatus } from 'src/enums/CaseStatus.enum';
-import { CaseDto } from './dto/Case.dto';
+import { Case } from '@app/schemas/case.schema';
+import { CaseStatus } from '@app/enums/case-status.enum';
+import { CaseDto } from '@app/modules/case/dto/case.dto';
 
 @Injectable()
 export class CaseService {

@@ -1,9 +1,10 @@
+import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+
 import * as session from 'express-session';
 
-import { AppModule } from './app.module';
-import { databaseConnectionUrl } from './utils/config/mongodb';
-import { Logger } from '@nestjs/common';
+import { AppModule } from '@app/app.module';
+import { databaseConnectionUrl } from '@app/utils/config/mongodb';
 
 const MongoStore = require('connect-mongo');
 const os = require('os');

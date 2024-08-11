@@ -9,10 +9,11 @@ import {
   Put,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { CaseService } from './case.service';
-import { CaseDto } from './dto/Case.dto';
-import { CaseResponseDto } from './dto/CaseResponse.dto';
-import { AllCaseResponseDto } from './dto/AllCaseResponse.dto';
+
+import { CaseService } from '@app/modules/case/case.service';
+import { CaseDto } from '@app/modules/case/dto/case.dto';
+import { CaseResponseDto } from '@app/modules/case/dto/case-response.dto';
+import { AllCaseResponseDto } from '@app/modules/case/dto/all-case-response.dto';
 
 @Controller('case')
 export class CaseController {

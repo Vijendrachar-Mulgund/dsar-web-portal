@@ -5,11 +5,10 @@ import {
   IsObject,
   IsString,
 } from 'class-validator';
-import { Message } from 'src/schemas/Message.schema';
 
-import { User } from 'src/schemas/User.schema';
+import { Drone } from '@app/schemas/drone.schema';
 
-export class MessageResponseDto {
+export class DroneResponseDto {
   @IsNumber()
   @IsNotEmpty()
   statusCode: number;
@@ -20,5 +19,5 @@ export class MessageResponseDto {
 
   @IsObject()
   @IsNotEmptyObject()
-  messageData: Message;
+  drone: Drone;
 }
