@@ -5,9 +5,7 @@ import {
   IsObject,
   IsString,
 } from 'class-validator';
-import { Message } from 'src/schemas/message.schema';
-
-import { User } from 'src/schemas/user.schema';
+import { Message } from '@app/schemas/message.schema';
 
 export class MessageResponseDto {
   @IsNumber()
