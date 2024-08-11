@@ -1,7 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
-import { SenderType } from 'src/enums/SenderType.enum';
-import { Case } from './case.schema';
+
+import { SenderType } from '@app/enums/sender-type.enum';
+import { Case } from '@app/schemas/case.schema';
 
 @Schema()
 export class Message {

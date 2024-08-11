@@ -11,12 +11,12 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 
-import { UsersService } from './users.service';
-import { UserResponseDto } from './dto/UserResponse.dto';
-import { Role } from '../../enums/Role.enum';
-import { Roles } from '../../decorators/roles.decorator';
-import { RolesGuard } from '../../guards/roles.guard';
-import { AuthGuard } from '../../guards/auth.guard';
+import { UsersService } from '@app/modules/users/users.service';
+import { UserResponseDto } from '@app/modules/users/dto/UserResponse.dto';
+import { Role } from '@app/enums/roles.enum';
+import { Roles } from '@app/decorators/roles.decorator';
+import { RolesGuard } from '@app/guards/roles.guard';
+import { AuthGuard } from '@app/guards/auth.guard';
 
 @Controller('users')
 export class UsersController {

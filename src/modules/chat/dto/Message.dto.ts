@@ -5,7 +5,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { SenderType } from 'src/enums/SenderType.enum';
+import { SenderType } from '@app/enums/sender-type.enum';
 
 export class MessageDto {
   @IsString()

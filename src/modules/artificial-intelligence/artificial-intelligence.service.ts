@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+
 import {
   ArtificialIntelligence,
   ArtificialIntelligenceDocument,
-} from 'src/schemas/artificial-intelligence.schema';
-import { ArtificialIntelligenceDto } from './dto/ArtificialIntelligence.dto';
-import { Model } from 'mongoose';
+} from '@app/schemas/artificial-intelligence.schema';
+import { ArtificialIntelligenceRegisterRequestDto } from '@app/modules/artificial-intelligence/dto/artificial-intelligence-register-request.dto';
 
 @Injectable()
 export class ArtificialIntelligenceService {
@@ -15,7 +16,7 @@ export class ArtificialIntelligenceService {
   ) {}
 
   async registerNewArtificialIntelligenceModel(
-    body: ArtificialIntelligenceDto,
+    body: ArtificialIntelligenceRegisterRequestDto,
   ): Promise<ArtificialIntelligenceDocument> {
     const newAiModel = new this.artificialIntelligenceModel({
       name: body?.name,

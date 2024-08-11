@@ -7,7 +7,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { CaseStatus } from 'src/enums/CaseStatus.enum';
+import { CaseStatus } from '@app/enums/case-status.enum';
 
 export class CaseDto {
   @IsEmail()

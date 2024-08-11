@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { CaseStatus } from 'src/enums/CaseStatus.enum';
+
+import { CaseStatus } from '@app/enums/case-status.enum';
 
 @Schema()
 export class Case {

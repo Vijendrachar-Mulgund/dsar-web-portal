@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
-import { ArtificialIntelligenceService } from './artificial-intelligence.service';
-import { ArtificialIntelligenceController } from './artificial-intelligence.controller';
 import { MongooseModule } from '@nestjs/mongoose';
+
+import { ArtificialIntelligenceService } from '@app/modules/artificial-intelligence/artificial-intelligence.service';
+import { ArtificialIntelligenceController } from '@app/modules/artificial-intelligence/artificial-intelligence.controller';
+
 import {
   ArtificialIntelligence,
   ArtificialIntelligenceSchema,
-} from 'src/schemas/artificial-intelligence.schema';
+} from '@app/schemas/artificial-intelligence.schema';
 import { UsersModule } from '../users/users.module';
 
 @Module({
