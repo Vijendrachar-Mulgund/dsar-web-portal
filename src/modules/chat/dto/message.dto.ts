@@ -18,15 +18,7 @@ export class MessageDto {
 
   @IsString()
   @IsOptional()
-  user: string;
-
-  @IsString()
-  @IsOptional()
-  drone: string;
-
-  @IsString()
-  @IsOptional()
-  artificialIntelligence: string;
+  sender: string;
 
   @IsString()
   @IsNotEmpty()
