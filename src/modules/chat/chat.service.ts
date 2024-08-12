@@ -103,6 +103,11 @@ export class ChatService {
         },
       },
       {
+        $sort: {
+          createdAt: 1,
+        },
+      },
+      {
         $project: {
           user: 0,
           drone: 0,
