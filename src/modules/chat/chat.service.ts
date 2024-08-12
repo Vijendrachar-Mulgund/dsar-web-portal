@@ -37,6 +37,14 @@ export class ChatService {
           localField: 'sender',
           foreignField: '_id',
           as: 'user',
+          pipeline: [
+            {
+              $project: {
+                _id: 1,
+                name: { $concat: ['$firstname', ' ', '$lastname'] },
+              },
+            },
+          ],
         },
       },
       {
@@ -45,6 +53,14 @@ export class ChatService {
           localField: 'sender',
           foreignField: '_id',
           as: 'drone',
+          pipeline: [
+            {
+              $project: {
+                _id: 1,
+                name: 1,
+              },
+            },
+          ],
         },
       },
       {
@@ -53,6 +69,14 @@ export class ChatService {
           localField: 'sender',
           foreignField: '_id',
           as: 'ai',
+          pipeline: [
+            {
+              $project: {
+                _id: 1,
+                name: 1,
+              },
+            },
+          ],
         },
       },
       {
