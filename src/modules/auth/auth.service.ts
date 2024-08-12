@@ -12,7 +12,9 @@ export class AuthService {
   async validateUser(
     requestBody: AuthSignInRequestDto,
   ): Promise<UserDocument | null> {
-    const user = await this.usersService.findUserByEmail(requestBody.email);
+    const user = await this.usersService.findUserByEmailAndUpdateLastLogin(
+      requestBody.email,
+    );
 
     if (!user) return null;
 

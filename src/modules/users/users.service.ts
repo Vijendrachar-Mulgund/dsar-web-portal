@@ -39,6 +39,18 @@ export class UsersService {
     return this.userModel.findOne({ email: email }).lean();
   }
 
+  async findUserByEmailAndUpdateLastLogin(
+    email: string,
+  ): Promise<UserDocument> {
+    return this.userModel
+      .findOneAndUpdate(
+        { email: email },
+        { lastLogin: new Date().toISOString() },
+        { new: true },
+      )
+      .lean();
+  }
+
   async findUserById(id: string): Promise<UserDocument> {
     return this.userModel.findById(id).lean();
   }
