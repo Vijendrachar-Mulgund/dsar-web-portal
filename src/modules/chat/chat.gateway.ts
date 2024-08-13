@@ -6,11 +6,13 @@ import {
 } from '@nestjs/websockets';
 
 import { Server } from 'socket.io';
+import { ChatService } from '@app/modules/chat/chat.service';
 
 const os = require('os');
 
-@WebSocketGateway()
+@WebSocketGateway({ cors: true })
 export class ChatGateway {
+  constructor(private chatService: ChatService) {}
   @WebSocketServer() server: Server;
 
   private logger = new Logger(ChatGateway.name);
@@ -22,8 +24,13 @@ export class ChatGateway {
     );
   }
 
+  @SubscribeMessage('join-room')
+  async handleJoinRoom(client: any, payload: any): Promise<void> {
+    client.join(payload?.caseId);
+  }
+
   @SubscribeMessage('message')
-  handleMessage(client: any, payload: any): string {
-    return 'Hello world!';
+  handleMessage(client: any, payload: any): any {
+    this.server.to(payload.case).emit('message', payload);
   }
 }
