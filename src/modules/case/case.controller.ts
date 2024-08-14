@@ -14,10 +14,14 @@ import { CaseService } from '@app/modules/case/case.service';
 import { CaseDto } from '@app/modules/case/dto/case.dto';
 import { CaseResponseDto } from '@app/modules/case/dto/case-response.dto';
 import { AllCaseResponseDto } from '@app/modules/case/dto/all-case-response.dto';
+import { ChatGateway } from '@app/modules/chat/chat.gateway';
 
 @Controller('case')
 export class CaseController {
-  constructor(private caseService: CaseService) {}
+  constructor(
+    private caseService: CaseService,
+    private chatGateway: ChatGateway,
+  ) {}
 
   @Post('create-new-case')
   async createNewCase(
@@ -51,17 +55,19 @@ export class CaseController {
   ): Promise<Response<CaseResponseDto, Record<string, any>>> {
     try {
       const body: CaseDto = request.body;
-      const caseId: String = request.params.caseId;
-      const newCase = await this.caseService.updateCase(caseId, body);
+      const caseId: string = request.params.caseId;
+      const updatedCase = await this.caseService.updateCase(caseId, body);
 
-      if (!newCase) {
+      if (!updatedCase) {
         throw new Error('The case could not be updated!');
       }
+
+      this.chatGateway.server.to(caseId).emit('message', updatedCase);
 
       return response.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,
         message: 'The case has been updated',
-        case: newCase,
+        case: updatedCase,
       });
     } catch (error) {
       throw new BadRequestException(

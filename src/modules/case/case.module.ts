@@ -4,6 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { CaseService } from '@app/modules/case/case.service';
 import { CaseController } from '@app/modules/case/case.controller';
 import { Case, CaseSchema } from '@app/schemas/case.schema';
+import { ChatModule } from '@app/modules/chat/chat.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { Case, CaseSchema } from '@app/schemas/case.schema';
         schema: CaseSchema,
       },
     ]),
+    ChatModule,
   ],
   providers: [CaseService],
   controllers: [CaseController],
