@@ -26,7 +26,6 @@ export class ChatGateway {
 
   @SubscribeMessage('join-room')
   async handleJoinRoom(client: any, payload: any): Promise<void> {
-    this.logger.log(`Client ${client.id} joined room ${payload?.caseId}`);
     const messages = await this.chatService.getAllMessages(payload?.caseId);
     client.join(payload?.caseId);
     client.emit('initial-messages', messages);
@@ -35,7 +34,6 @@ export class ChatGateway {
   @SubscribeMessage('leave-room')
   handleLeaveRoom(client: any, payload: any): void {
     client.leave(payload?.caseId);
-    this.logger.log(`Client ${client.id} left room ${payload?.caseId}`);
   }
 
   @SubscribeMessage('message')
