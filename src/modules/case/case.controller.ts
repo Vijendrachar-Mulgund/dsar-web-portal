@@ -15,12 +15,14 @@ import { CaseDto } from '@app/modules/case/dto/case.dto';
 import { CaseResponseDto } from '@app/modules/case/dto/case-response.dto';
 import { AllCaseResponseDto } from '@app/modules/case/dto/all-case-response.dto';
 import { ChatGateway } from '@app/modules/chat/chat.gateway';
+import { CaseGateway } from '@app/modules/case/case.gateway';
 
 @Controller('case')
 export class CaseController {
   constructor(
     private caseService: CaseService,
     private chatGateway: ChatGateway,
+    private caseGateway: CaseGateway,
   ) {}
 
   @Post('create-new-case')
@@ -35,6 +37,8 @@ export class CaseController {
       if (!newCase) {
         throw new Error('The case could not be created!');
       }
+
+      this.caseGateway.getAllCases();
 
       return response.status(HttpStatus.CREATED).json({
         statusCode: HttpStatus.CREATED,

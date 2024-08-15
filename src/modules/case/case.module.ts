@@ -5,6 +5,7 @@ import { CaseService } from '@app/modules/case/case.service';
 import { CaseController } from '@app/modules/case/case.controller';
 import { Case, CaseSchema } from '@app/schemas/case.schema';
 import { ChatModule } from '@app/modules/chat/chat.module';
+import { CaseGateway } from '@app/modules/case/case.gateway';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { ChatModule } from '@app/modules/chat/chat.module';
     ]),
     ChatModule,
   ],
-  providers: [CaseService],
+  providers: [CaseService, CaseGateway],
   controllers: [CaseController],
 })
 export class CaseModule {}
