@@ -48,6 +48,10 @@ export class CaseService {
     return await this.caseModel.find().lean();
   }
 
+  async getCase(caseId: String): Promise<any> {
+    return await this.caseModel.findById(caseId).lean();
+  }
+
   async chatGPT(roomID: string, message: string): Promise<any> {
     const aiResponse = await ollama.chat({
       model: 'llama3',

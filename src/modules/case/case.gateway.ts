@@ -6,7 +6,7 @@ import {
 
 import { Server } from 'socket.io';
 import { CaseService } from '@app/modules/case/case.service';
-import { Logger } from '@nestjs/common';
+import { HttpStatus, Logger } from '@nestjs/common';
 
 const os = require('os');
 
@@ -26,7 +26,40 @@ export class CaseGateway {
 
   @SubscribeMessage('get-all-cases')
   async getAllCases(): Promise<void> {
-    const messages = await this.caseService.getAllCases();
-    this.server.emit('all-cases', messages);
+    const cases = await this.caseService.getAllCases();
+
+    // Construct the response
+    const response = {
+      statusCode: HttpStatus.OK,
+      message: 'The case detail is fetched',
+      data: cases,
+    };
+
+    // Emit the response to all the connected clients
+    this.server.emit('all-cases', response);
+  }
+
+  @SubscribeMessage('join-room')
+  async handleJoinRoom(client: any, payload: any): Promise<void> {
+    // Join the room - Case
+    client.join(payload?.caseId);
+
+    // Fetch the case detail
+    const caseDetail = await this.caseService.getCase(payload?.caseId);
+
+    // Construct the response
+    const response = {
+      statusCode: HttpStatus.OK,
+      message: 'The case detail is fetched',
+      data: caseDetail,
+    };
+
+    // Emit the response to the entire room
+    this.server.to(payload?.caseId).emit('case-detail', response);
+  }
+
+  @SubscribeMessage('leave-room')
+  handleLeaveRoom(client: any, payload: any): void {
+    client.leave(payload?.caseId);
   }
 }
