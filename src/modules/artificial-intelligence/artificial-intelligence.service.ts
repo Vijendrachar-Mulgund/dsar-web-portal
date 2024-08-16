@@ -7,6 +7,7 @@ import {
   ArtificialIntelligenceDocument,
 } from '@app/schemas/artificial-intelligence.schema';
 import { ArtificialIntelligenceRegisterRequestDto } from '@app/modules/artificial-intelligence/dto/artificial-intelligence-register-request.dto';
+import { ArtificialIntelligenceModel } from '@app/enums/artificial-intelligence-models.enum';
 
 @Injectable()
 export class ArtificialIntelligenceService {
@@ -35,5 +36,11 @@ export class ArtificialIntelligenceService {
     ArtificialIntelligenceDocument[]
   > {
     return this.artificialIntelligenceModel.find().exec();
+  }
+
+  async getArtificialIntelligenceByModel(
+    model: ArtificialIntelligenceModel,
+  ): Promise<ArtificialIntelligenceDocument> {
+    return this.artificialIntelligenceModel.findOne({ model }).exec();
   }
 }

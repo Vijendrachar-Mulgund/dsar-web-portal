@@ -24,7 +24,7 @@ export class ChatController {
   ): Promise<Response<MessageResponseDto, Record<string, any>>> {
     try {
       const body: MessageDto = request.body;
-      const message = await this.chatService.sendMessage(body);
+      const message = await this.chatService.saveMessage(body);
 
       if (!message) {
         throw new Error('Unable to send message. Please try again later!');

@@ -2,8 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import ollama from 'ollama';
-
 import { Case } from '@app/schemas/case.schema';
 import { CaseStatus } from '@app/enums/case-status.enum';
 import { CaseDto } from '@app/modules/case/dto/case.dto';
@@ -50,16 +48,5 @@ export class CaseService {
 
   async getCase(caseId: String): Promise<any> {
     return await this.caseModel.findById(caseId).lean();
-  }
-
-  async chatGPT(roomID: string, message: string): Promise<any> {
-    const aiResponse = await ollama.chat({
-      model: 'llama3',
-      messages: [{ role: 'user', content: message }],
-    });
-
-    const response = aiResponse.message.content;
-
-    return response;
   }
 }

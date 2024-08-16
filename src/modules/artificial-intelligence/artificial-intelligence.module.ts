@@ -23,5 +23,6 @@ import { UsersModule } from '@app/modules/users/users.module';
   ],
   providers: [ArtificialIntelligenceService],
   controllers: [ArtificialIntelligenceController],
+  exports: [ArtificialIntelligenceService],
 })
 export class ArtificialIntelligenceModule {}

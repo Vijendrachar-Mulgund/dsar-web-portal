@@ -23,10 +23,4 @@ export class MessageDto {
   @IsString()
   @IsNotEmpty()
   case: string;
-
-  @IsDateString()
-  createdAt: Date;
-
-  @IsDateString()
-  updatedAt: Date;
 }
