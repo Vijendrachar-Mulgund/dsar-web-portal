@@ -21,7 +21,6 @@ import { CaseGateway } from '@app/modules/case/case.gateway';
 export class CaseController {
   constructor(
     private caseService: CaseService,
-    private chatGateway: ChatGateway,
     private caseGateway: CaseGateway,
   ) {}
 
@@ -66,7 +65,13 @@ export class CaseController {
         throw new Error('The case could not be updated!');
       }
 
-      this.chatGateway.server.to(caseId).emit('message', updatedCase);
+      const updatedCaseDetail = {
+        statusCode: HttpStatus.OK,
+        message: 'The case has been updated',
+        data: updatedCase,
+      };
+
+      this.caseGateway.server.to(caseId).emit('case-detail', updatedCaseDetail);
 
       return response.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,

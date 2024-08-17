@@ -228,13 +228,18 @@ export class ChatService {
   }
 
   async chatGPT(message: string, senderType: SenderType): Promise<any> {
+    const aiContext = [];
+
+    const prompt = { role: senderType.toString(), content: message };
+    aiContext.push(prompt);
+
     const aiResponse = await ollama.chat({
       model: 'llama3',
       messages: [{ role: senderType.toString(), content: message }],
     });
 
-    const response = aiResponse.message.content;
+    aiContext.push(aiResponse?.message);
 
-    return response;
+    return aiResponse?.message?.content;
   }
 }
