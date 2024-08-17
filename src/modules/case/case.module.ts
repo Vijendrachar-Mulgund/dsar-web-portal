@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { CaseService } from '@app/modules/case/case.service';
@@ -15,9 +15,10 @@ import { CaseGateway } from '@app/modules/case/case.gateway';
         schema: CaseSchema,
       },
     ]),
-    ChatModule,
+    forwardRef(() => ChatModule),
   ],
   providers: [CaseService, CaseGateway],
   controllers: [CaseController],
+  exports: [CaseService, CaseGateway],
 })
 export class CaseModule {}

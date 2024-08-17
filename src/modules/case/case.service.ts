@@ -42,6 +42,28 @@ export class CaseService {
     return updatedCase;
   }
 
+  async updateContext(caseId: String, context: any): Promise<any> {
+    const caseData = await this.caseModel.findById(caseId).lean();
+
+    if (!caseData) {
+      throw new Error('Case not found');
+    }
+
+    const updatedCase = await this.caseModel.findByIdAndUpdate(
+      caseId,
+      {
+        context: context,
+        updatedAt: new Date().toISOString(),
+      },
+      {
+        new: true,
+        lean: true,
+      },
+    );
+
+    return updatedCase;
+  }
+
   async getAllCases(): Promise<any> {
     return await this.caseModel.find().lean();
   }

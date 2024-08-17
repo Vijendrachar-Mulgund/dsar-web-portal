@@ -227,19 +227,40 @@ export class ChatService {
     return visionResponse;
   }
 
-  async chatGPT(message: string, senderType: SenderType): Promise<any> {
-    const aiContext = [];
+  async chatGPT(
+    message: string,
+    senderType: SenderType,
+    context: Array<any>,
+  ): Promise<any> {
+    let aiContext = [];
+
+    if (context) {
+      aiContext = context;
+    }
 
     const prompt = { role: senderType.toString(), content: message };
+
     aiContext.push(prompt);
+
+    let messageWithContext;
+
+    if (aiContext?.length >= 2) {
+      let lastTenMessages = aiContext.slice(-10);
+
+      lastTenMessages = lastTenMessages.map((message) => message.content);
+
+      messageWithContext = message + ' context: ' + lastTenMessages.join('\n');
+    } else {
+      messageWithContext = message;
+    }
 
     const aiResponse = await ollama.chat({
       model: 'llama3',
-      messages: [{ role: senderType.toString(), content: message }],
+      messages: [{ role: senderType.toString(), content: messageWithContext }],
     });
 
     aiContext.push(aiResponse?.message);
 
-    return aiResponse?.message?.content;
+    return { message: aiResponse?.message?.content, context: aiContext };
   }
 }

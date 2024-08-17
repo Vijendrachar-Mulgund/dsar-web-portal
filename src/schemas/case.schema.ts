@@ -20,6 +20,12 @@ export class Case {
   @Prop({ type: String })
   liveVideoURL: string;
 
+  @Prop({ type: Boolean, default: false })
+  isLive: boolean;
+
+  @Prop({ type: Array, default: [] })
+  context: Array<any>;
+
   // GeoJSON Point - [longitude, latitude]
   @Prop({ type: Object, coordinates: [Number] })
   location: {

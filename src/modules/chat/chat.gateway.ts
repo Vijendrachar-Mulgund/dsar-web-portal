@@ -11,6 +11,8 @@ import { MessageDto } from '@app/modules/chat/dto/message.dto';
 import { SenderType } from '@app/enums/sender-type.enum';
 import { ArtificialIntelligenceService } from '@app/modules/artificial-intelligence/artificial-intelligence.service';
 import { ArtificialIntelligenceModel } from '@app/enums/artificial-intelligence-models.enum';
+import { CaseService } from '@app/modules/case/case.service';
+import { CaseGateway } from '@app/modules/case/case.gateway';
 
 const os = require('os');
 
@@ -18,6 +20,8 @@ const os = require('os');
 export class ChatGateway {
   constructor(
     private chatService: ChatService,
+    private caseService: CaseService,
+    private caseGateway: CaseGateway,
     private artificialIntelligenceService: ArtificialIntelligenceService,
   ) {}
   @WebSocketServer() server: Server;
@@ -47,32 +51,49 @@ export class ChatGateway {
 
   @SubscribeMessage('message')
   async handleMessage(client: any, payload: MessageDto): Promise<any> {
-    const newMessage = await this.chatService.saveMessage(payload);
+    try {
+      const newMessage = await this.chatService.saveMessage(payload);
 
-    // Send the user's message to everyone in the room
-    this.server.to(payload.case).emit('message', newMessage);
+      // Send the user's message to everyone in the room
+      this.server.to(payload.case).emit('message', newMessage);
 
-    // Chat with AI
-    const aiResponse = await this.chatService.chatGPT(
-      payload.message,
-      payload.senderType as SenderType,
-    );
+      // Get the context in Case Service
+      const caseData = await this.caseService.getCase(payload.case);
 
-    // Get The AI responsible for the case
-    const aiModel =
-      await this.artificialIntelligenceService.getArtificialIntelligenceByModel(
-        ArtificialIntelligenceModel.llama3,
+      // Chat with AI
+      const aiResponse = await this.chatService.chatGPT(
+        payload.message,
+        payload.senderType as SenderType,
+        caseData?.context,
       );
 
-    const aiNewMessage = await this.chatService.saveMessage({
-      message: aiResponse,
-      senderType: SenderType.artificialIntelligence,
-      sender: aiModel?._id as string,
-      case: payload.case,
-    });
+      // Get The AI responsible for the case
+      const aiModel =
+        await this.artificialIntelligenceService.getArtificialIntelligenceByModel(
+          ArtificialIntelligenceModel.llama3,
+        );
 
-    // Send the AI's message to everyone in the room
-    this.server.to(payload.case).emit('message', aiNewMessage);
+      const aiNewMessage = await this.chatService.saveMessage({
+        message: aiResponse?.message as string,
+        senderType: SenderType.artificialIntelligence,
+        sender: aiModel?._id as string,
+        case: payload.case,
+      });
+
+      // Update the context in Case Service
+      const updatedCase = await this.caseService.updateContext(
+        payload.case,
+        aiResponse?.context,
+      );
+
+      // Emit the Updated case to the frontend
+      this.caseGateway.server.to(payload.case).emit('case-detail', updatedCase);
+
+      // Send the AI's message to everyone in the room
+      this.server.to(payload.case).emit('message', aiNewMessage);
+    } catch (error) {
+      this.server.to(payload.case).emit('error', error.message);
+    }
   }
 
   @SubscribeMessage('leave-room')

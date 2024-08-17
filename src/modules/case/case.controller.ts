@@ -14,7 +14,6 @@ import { CaseService } from '@app/modules/case/case.service';
 import { CaseDto } from '@app/modules/case/dto/case.dto';
 import { CaseResponseDto } from '@app/modules/case/dto/case-response.dto';
 import { AllCaseResponseDto } from '@app/modules/case/dto/all-case-response.dto';
-import { ChatGateway } from '@app/modules/chat/chat.gateway';
 import { CaseGateway } from '@app/modules/case/case.gateway';
 
 @Controller('case')
