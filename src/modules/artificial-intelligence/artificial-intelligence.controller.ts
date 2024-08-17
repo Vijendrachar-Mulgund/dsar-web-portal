@@ -71,7 +71,7 @@ export class ArtificialIntelligenceController {
       return response.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,
         message: 'AI models fetched successfully',
-        drone: aiModels,
+        data: aiModels,
       });
     } catch (error) {
       throw new BadRequestException(
