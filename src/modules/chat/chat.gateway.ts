@@ -37,16 +37,18 @@ export class ChatGateway {
 
   @SubscribeMessage('join-room')
   async handleJoinRoom(client: any, payload: any): Promise<void> {
-    // The Client joins the room
-    client.join(payload?.caseId);
+    try {
+      // The Client joins the room
+      client.join(payload?.caseId);
 
-    // Get the history of the room and it's chat and send it to the client
-    const messages = await this.chatService.getAllMessages(payload?.caseId);
+      // Get the history of the room and it's chat and send it to the client
+      const messages = await this.chatService.getAllMessages(payload?.caseId);
 
-    // Send the history of the room to the client
-    client.emit('initial-messages', messages);
-
-    this.logger.log(`Client joined room: ${payload?.caseId}`);
+      // Send the history of the room to the client
+      client.emit('initial-messages', messages);
+    } catch (error) {
+      this.server.to(payload?.caseId).emit('error', error.message);
+    }
   }
 
   @SubscribeMessage('message')
@@ -98,6 +100,10 @@ export class ChatGateway {
 
   @SubscribeMessage('leave-room')
   handleLeaveRoom(client: any, payload: any): void {
-    client.leave(payload?.caseId);
+    try {
+      client.leave(payload?.caseId);
+    } catch (error) {
+      this.server.to(payload?.caseId).emit('error', error.message);
+    }
   }
 }
