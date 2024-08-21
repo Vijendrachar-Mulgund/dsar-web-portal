@@ -14,10 +14,16 @@ import { Request, Response } from 'express';
 import { AuthResponse } from '@app/modules/auth/dto/auth-response.dto';
 import { AuthService } from '@app/modules/auth/auth.service';
 import { AuthGuard } from '@app/guards/auth.guard';
+import { UsersService } from '@app/modules/users/users.service';
+import { CreateNewUserDto } from '../users/dto/create-new-user.dto';
+import { Role } from '@app/enums/roles.enum';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private usersService: UsersService,
+  ) {}
 
   @Post('sign-in')
   async signIn(
@@ -116,6 +122,43 @@ export class AuthController {
         statusCode: HttpStatus.OK,
         message: 'Password changed successfully!',
         user: result,
+      });
+    } catch (error: any) {
+      throw new UnauthorizedException(
+        error.message || 'Something went wrong. Please try again later!',
+      );
+    }
+  }
+
+  @Post('sign-up-admin')
+  async signUpAdmin(
+    @Req() request: Request,
+    @Res() response: Response,
+  ): Promise<Response<AuthResponse, Record<string, any>>> {
+    try {
+      if (!request?.body?.key || request?.body?.key !== process.env.ADMIN_KEY) {
+        throw new Error(
+          "The Admin code doesn't match! Please enter a valid code",
+        );
+      }
+
+      const createUserPayload: CreateNewUserDto = {
+        email: request?.body?.email,
+        firstname: request?.body?.firstname,
+        lastname: request?.body?.lastname,
+        role: Role.admin,
+      };
+
+      const user = await this.usersService.createNewUser(createUserPayload);
+
+      if (!user) {
+        throw new Error('Unable to create new account!');
+      }
+
+      return response.status(HttpStatus.CREATED).json({
+        statusCode: HttpStatus.CREATED,
+        message: 'Admin created successfully!',
+        data: user?.email,
       });
     } catch (error: any) {
       throw new UnauthorizedException(
