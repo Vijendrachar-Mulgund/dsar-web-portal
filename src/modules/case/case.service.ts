@@ -15,6 +15,7 @@ export class CaseService {
       title: data?.title,
       description: data?.description,
       videoURL: data?.videoURL,
+      isLive: data?.isLive,
       liveVideoURL: data?.liveVideoURL,
       location: data?.location,
       status: CaseStatus.open,

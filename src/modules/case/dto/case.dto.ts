@@ -1,4 +1,5 @@
 import {
+  IsBoolean,
   IsEmail,
   IsEnum,
   IsNumber,
@@ -33,6 +34,10 @@ export class CaseDto {
   @IsObject()
   @IsOptional()
   weather?: Object;
+
+  @IsBoolean()
+  @IsOptional()
+  isLive?: boolean;
 
   @IsNumber()
   @IsOptional()
