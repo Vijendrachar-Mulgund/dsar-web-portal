@@ -98,8 +98,6 @@ export class CaseController {
         SenderType?.drone,
       );
 
-      console.log('visionResponse', visionResponse);
-
       const checklistPrompt = `Write a description of the situation where ${body?.numberOfPeopleFound} missing persons were found, for the first responders. Description of the scene where they were found: ${visionResponse}  Weather conditions at the location where they were found: Temperature - ${weatherDetails?.main?.temp} degrees Celsius, Visibility - ${weatherDetails?.visibility} meters, Wind - ${weatherDetails?.wind?.speed} m/s, Humidity - ${weatherDetails?.main?.humidity}%. With the above information, generate a detailed description for the first responders, and generate checklist of medical supplies and any other items required according to the weather, to be bought to the scene.`;
 
       const savedPrompt = await this.chatService.saveMessage({
