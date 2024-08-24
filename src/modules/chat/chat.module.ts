@@ -21,6 +21,6 @@ import { CaseModule } from '@app/modules/case/case.module';
   ],
   providers: [ChatService, ChatGateway],
   controllers: [ChatController],
-  exports: [ChatGateway],
+  exports: [ChatGateway, ChatService],
 })
 export class ChatModule {}

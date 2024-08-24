@@ -27,6 +27,14 @@ export class CaseDto {
   @IsOptional()
   liveVideoURL?: string;
 
+  @IsString()
+  @IsOptional()
+  imageURL?: string;
+
+  @IsString()
+  @IsOptional()
+  droneId?: string;
+
   @IsEnum(CaseStatus, { each: true })
   @IsOptional()
   status?: boolean;
@@ -47,6 +55,6 @@ export class CaseDto {
   @IsOptional()
   location?: {
     type: string;
-    coordinates: [number];
+    coordinates: [number, number];
   };
 }

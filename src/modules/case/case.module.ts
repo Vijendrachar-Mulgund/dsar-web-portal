@@ -6,6 +6,7 @@ import { CaseController } from '@app/modules/case/case.controller';
 import { Case, CaseSchema } from '@app/schemas/case.schema';
 import { ChatModule } from '@app/modules/chat/chat.module';
 import { CaseGateway } from '@app/modules/case/case.gateway';
+import { ArtificialIntelligenceModule } from '@app/modules/artificial-intelligence/artificial-intelligence.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { CaseGateway } from '@app/modules/case/case.gateway';
       },
     ]),
     forwardRef(() => ChatModule),
+    forwardRef(() => ArtificialIntelligenceModule),
   ],
   providers: [CaseService, CaseGateway],
   controllers: [CaseController],

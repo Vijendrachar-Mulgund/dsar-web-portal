@@ -20,6 +20,9 @@ export class Case {
   @Prop({ type: String })
   liveVideoURL: string;
 
+  @Prop({ type: String })
+  imageURL: string;
+
   @Prop({ type: Boolean, default: false })
   isLive: boolean;
 

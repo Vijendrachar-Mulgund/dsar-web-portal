@@ -65,6 +65,29 @@ export class CaseService {
     return updatedCase;
   }
 
+  async getWeatherDetails(body: CaseDto): Promise<any> {
+    try {
+      // Call the weather API to get the weather details
+
+      const location = body?.location?.coordinates;
+
+      const longitude = location[0];
+      const latitude = location[1];
+      const units = 'metric';
+
+      // Call the weather API to get the weather details
+      const response = await fetch(
+        `${process.env.OPEN_WEATHER_MAP_API_URL}?lat=${latitude}&lon=${longitude}&appid=${process.env.OPEN_WEATHER_MAP_API_KEY}&units=${units}`,
+      );
+
+      const data = await response.json();
+
+      return data;
+    } catch (error) {
+      throw new Error(error.message || 'Weather details not found');
+    }
+  }
+
   async getAllCases(): Promise<any> {
     return await this.caseModel.find().lean();
   }

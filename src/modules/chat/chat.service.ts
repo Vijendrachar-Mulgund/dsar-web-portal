@@ -219,12 +219,20 @@ export class ChatService {
     message: string,
     senderType: SenderType,
   ): Promise<any> {
+    const imageBase64 = await this.convertToBase64(imageURL);
+
     const visionResponse = await ollama.chat({
       model: 'llava',
-      messages: [{ role: senderType, content: message, images: [imageURL] }],
+      messages: [
+        {
+          role: senderType,
+          content: message,
+          images: [imageBase64],
+        },
+      ],
     });
 
-    return visionResponse;
+    return visionResponse?.message?.content;
   }
 
   async chatGPT(
@@ -262,5 +270,11 @@ export class ChatService {
     aiContext.push(aiResponse?.message);
 
     return { message: aiResponse?.message?.content, context: aiContext };
+  }
+
+  async convertToBase64(imageUrl) {
+    const response = await fetch(imageUrl);
+    const buffer = await response.arrayBuffer();
+    return Buffer.from(buffer).toString('base64');
   }
 }
