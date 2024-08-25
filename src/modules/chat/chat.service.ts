@@ -14,6 +14,9 @@ export class ChatService {
     @InjectModel(Message.name) private messageModel: Model<MessageDocument>,
   ) {}
 
+  largeLanguageModel = process.env.AI_LLM_MODEL;
+  visionModel = process.env.AI_VISION_MODEL;
+
   async saveMessage(messageContent: MessageDto): Promise<MessageDocument> {
     const newMessage = new this.messageModel({
       message: messageContent.message,
@@ -221,8 +224,10 @@ export class ChatService {
   ): Promise<any> {
     const imageBase64 = await this.convertToBase64(imageURL);
 
+    console.log('vision model', this.visionModel);
+
     const visionResponse = await ollama.chat({
-      model: 'llava',
+      model: this.visionModel,
       messages: [
         {
           role: senderType,
@@ -240,6 +245,8 @@ export class ChatService {
     senderType: SenderType,
     context: Array<any>,
   ): Promise<any> {
+    console.log('large language model', this.largeLanguageModel);
+
     let aiContext = [];
 
     if (context) {
@@ -263,7 +270,7 @@ export class ChatService {
     }
 
     const aiResponse = await ollama.chat({
-      model: 'llama3',
+      model: this.largeLanguageModel,
       messages: [{ role: senderType.toString(), content: messageWithContext }],
     });
 

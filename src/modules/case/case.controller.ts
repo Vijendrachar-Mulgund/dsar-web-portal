@@ -127,7 +127,7 @@ export class CaseController {
 
       const aiModel =
         await this.artificialIntelligenceService.getArtificialIntelligenceByModel(
-          ArtificialIntelligenceModel.llama3,
+          ArtificialIntelligenceModel.llama3dot1,
         );
 
       // Save the chat response
