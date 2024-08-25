@@ -86,8 +86,16 @@ export class CaseController {
         throw new Error('The case could not be updated!');
       }
 
+      const caseDetailResponse = {
+        statusCode: HttpStatus.OK,
+        message: 'The case has been initiated',
+        data: updatedCase,
+      };
+
       // Emit an event to the case room
-      this.caseGateway.server.to(caseId).emit('case-detail', updatedCase);
+      this.caseGateway.server
+        .to(caseId)
+        .emit('case-detail', caseDetailResponse);
 
       const visionPrompt = `Describe the terrain in this image for a rescue operation, give a detailed description of the scene. Note any potential hazards, and identify any vehicles or landmarks in the image.`;
 
@@ -98,7 +106,7 @@ export class CaseController {
         SenderType?.drone,
       );
 
-      const checklistPrompt = `Write a description of the situation where ${body?.numberOfPeopleFound} missing persons were found, for the first responders. Description of the scene where they were found: ${visionResponse}  Weather conditions at the location where they were found: Temperature - ${weatherDetails?.main?.temp} degrees Celsius, Visibility - ${weatherDetails?.visibility} meters, Wind - ${weatherDetails?.wind?.speed} m/s, Humidity - ${weatherDetails?.main?.humidity}%. With the above information, generate a detailed description for the first responders, and generate checklist of medical supplies and any other items required according to the weather, to be bought to the scene.`;
+      const checklistPrompt = `Write a description of the situation where ${body?.numberOfPeopleFound} missing persons were found, for the first responders. \n\nDescription of the scene where they were found: ${visionResponse}. \n\nWeather conditions at the location where they were found: Temperature - ${weatherDetails?.main?.temp} degrees Celsius, Visibility - ${weatherDetails?.visibility} meters, Wind - ${weatherDetails?.wind?.speed} m/s, Humidity - ${weatherDetails?.main?.humidity}%. \n\nWith the above information, generate a detailed description for the first responders, and generate checklist of medical supplies and any other items required according to the weather, to be bought to the scene.`;
 
       const savedPrompt = await this.chatService.saveMessage({
         message: checklistPrompt,
