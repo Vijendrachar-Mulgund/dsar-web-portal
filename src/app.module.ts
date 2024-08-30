@@ -14,7 +14,7 @@ import { ArtificialIntelligenceModule } from '@app/modules/artificial-intelligen
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: ['.env', '.env.development.local', '.env.production'],
+      envFilePath: ['.env', '.env.development.local', '.env.production.local'],
       isGlobal: true,
     }),
     MongooseModule.forRoot(

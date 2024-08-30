@@ -224,8 +224,6 @@ export class ChatService {
   ): Promise<any> {
     const imageBase64 = await this.convertToBase64(imageURL);
 
-    console.log('vision model', this.visionModel);
-
     const visionResponse = await ollama.chat({
       model: this.visionModel,
       messages: [
@@ -245,8 +243,6 @@ export class ChatService {
     senderType: SenderType,
     context: Array<any>,
   ): Promise<any> {
-    console.log('large language model', this.largeLanguageModel);
-
     let aiContext = [];
 
     if (context) {

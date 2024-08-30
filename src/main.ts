@@ -17,7 +17,6 @@ async function bootstrap() {
   const port = process.env.PORT;
   const version = process.env.API_VERSION;
   const sessionSecret = process.env.SESSION_SECRET;
-  const sessionCookieSecure = Boolean(process.env.SESSION_COOKIE_SECURE);
   const sessionCookieMaxAge = +process.env.SESSION_COOKIE_MAX_AGE;
   const sessionCookieName = process.env.SESSION_COOKIE_NAME;
 
@@ -42,7 +41,7 @@ async function bootstrap() {
       store: sessionsDatabase,
       cookie: {
         httpOnly: true,
-        secure: sessionCookieSecure,
+        secure: process.env.NODE_ENV === 'production',
         maxAge: sessionCookieMaxAge,
       },
     }),
@@ -53,7 +52,6 @@ async function bootstrap() {
 
   // CORS Config
   app.enableCors({
-    allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept',
     origin: true,
     credentials: true,
   });
