@@ -1,5 +1,6 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 import * as session from 'express-session';
 
@@ -11,7 +12,10 @@ const os = require('os');
 
 async function bootstrap() {
   // Nest Create new Server
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  // Trust the first proxy // Only on Production
+  if (process.env.NODE_ENV === 'production') app.set('trust proxy', true);
 
   // Get the Environment variables
   const port = process.env.PORT;
@@ -45,6 +49,11 @@ async function bootstrap() {
         maxAge: sessionCookieMaxAge,
       },
     }),
+  );
+
+  Logger.log(
+    `Environment: ${process.env.NODE_ENV}, Check: ${process.env.NODE_ENV === 'production'}`,
+    'Environment',
   );
 
   // Global definitions
