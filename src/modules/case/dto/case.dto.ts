@@ -37,7 +37,7 @@ export class CaseDto {
 
   @IsEnum(CaseStatus, { each: true })
   @IsOptional()
-  status?: boolean;
+  status?: string;
 
   @IsObject()
   @IsOptional()
